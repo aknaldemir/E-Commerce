@@ -1,0 +1,43 @@
+﻿@model IEnumerable< App.MvcWebUI.Models.UserOrderModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container" style="padding-top:150px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Sipariş Bilgileriniz</h2>
+                <hr />
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>Order Date</th>
+                            <th>Total</th>
+                            <th>State</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.OrderNumber</td>
+                                <td>@item.OrderDate.ToShortDateString()</td>
+                                <td>@item.Total.ToString("c")</td>
+                                <td>@item.OrderState</td>
+                                <td>
+                                     @Html.ActionLink("Detail", "Details", new {id=item.Id },new {@class="btn btn-primary btn-sm" })
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+

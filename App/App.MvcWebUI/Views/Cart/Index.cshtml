@@ -1,0 +1,94 @@
+﻿@model App.MvcWebUI.Models.Cart
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container" style="padding-top:150px;">
+    <div class="row">
+
+        <div class="col-md-12">
+            <h2>Sepet</h2>
+            <hr />
+            
+            @if (Model.CartLines.Count > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Quantity</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Sub Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CartLines)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="~/Upload/@item.Product.files" alt="" width="50" />
+                                </td>
+                                <td>
+                                    @item.Quantity
+                                </td>
+                                <td>
+                                    @item.Product.Name
+                                </td>
+                                <td>
+                                    @item.Product.Price
+                                </td>
+                                <td>
+                                    @((item.Product.Price * item.Quantity).ToString("c"))
+                                </td>
+                                <td>
+                                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                                    {
+                                        @Html.Hidden("Id", item.Product.Id);
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i>
+                                            Delete
+                                        </button>
+
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>
+                                @Model.Total().ToString("c")
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="text-center">
+                    <a href="/Home/List" class="btn btn-primary">
+                        <i class="fas fa-arrow-left"></i>
+                        Alışverişe Devam Et
+                    </a>
+                    <a href="/Cart/Checkout" class="btn btn-primary">
+                        <i class="fas fa-check"></i>
+                        Alışverişi Tamamla
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning" role="alert">
+                    Sepet Boş :(
+                </div>
+            }
+
+
+
+        </div>
+    </div>
+</div>

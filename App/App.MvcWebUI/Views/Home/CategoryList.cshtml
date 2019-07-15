@@ -1,0 +1,58 @@
+﻿@using App.MvcWebUI.Entities
+@model List<Category>
+@{
+    //urlden id değerini almak için
+    var selectedCategory = Url.RequestContext.RouteData.Values["id"];
+}
+
+
+
+
+
+
+
+
+
+<ul class="list-group">
+
+    <a href="/Home/List" class="list-group-item">
+        <i class="fas fa-angle-double-right"></i>
+        Tüm Kategoriler
+    </a>
+
+</ul>
+
+<ul class="list-group ">
+    @foreach (var category in Model)
+    {
+        if (selectedCategory != null)
+        {
+            if (category.Id == int.Parse(selectedCategory.ToString()))
+            {
+                //seçilen kategori ile route id'si eşit
+
+                <a href="/Home/List/@category.Id" class="list-group-item active">
+                    <i class="fas fa-angle-double-right"></i>
+                    @category.Name
+                </a>
+
+            }
+            else
+            {
+                <a href="/Home/List/@category.Id" class="list-group-item">
+                    <i class="fas fa-angle-double-right"></i>
+                    @category.Name
+                </a>
+            }
+        }
+        else
+        {
+            <a href="/Home/List/@category.Id" class="list-group-item">
+                <i class="fas fa-angle-double-right"></i>
+                @category.Name
+            </a>
+        }
+
+
+    }
+</ul>

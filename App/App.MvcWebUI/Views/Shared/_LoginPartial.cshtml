@@ -1,0 +1,28 @@
+﻿
+
+    @if (Request.IsAuthenticated)
+    {
+        //kullanıcı login olmuşsa adını ve logout linklerini çıkar
+        <li class="nav-item active">
+            <a class="nav-link" href="/Account/Index">@User.Identity.Name</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/Account/Logout">
+                Logout
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </li>
+    }
+    else
+    {
+        //login olmadıysa  login ve register linklerini çıkar
+
+        <li class="nav-item active">
+            <a class="nav-link" href="/Account/Login">Login</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/Account/Register">Register</a>
+        </li>
+    }
+
+

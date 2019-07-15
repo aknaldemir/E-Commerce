@@ -1,0 +1,45 @@
+﻿@using App.MvcWebUI.Models;
+@model List<ProductModel>
+
+<style>
+    #productName {
+        white-space: nowrap;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4 col-lg-3  mb-3">
+            <div id="sepet"></div>
+            <div class="card">
+                <a href="/Home/Details/@product.Id">
+                    <img class="card-img-top img-fluid" src="~/Upload/@product.Image" alt="@product.Name">
+                    <div class="card-body">
+                        <h4 class="card-title" id="productName">
+                            <a href="/Home/Details/@product.Id">@product.Name</a>
+                        </h4>
+                        <p class="card-text description">@product.Description</p>
+                    </div>
+                </a>
+                <div class="card-footer">
+                    <small class="product-price">
+                        <i class="fas fa-lira-sign"></i>
+                        @product.Price
+                    </small>
+                    <a href="/Cart/AddToCart/@product.Id" class="btn btn-success btn-sm float-right">
+                        Sepete Ekle
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+

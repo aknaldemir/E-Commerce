@@ -1,0 +1,134 @@
+﻿@model App.MvcWebUI.Entities.Product
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link href="~/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/bower_components/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/bower_components/bootstrap-fileinput/js/fileinput.min.js"></script>
+<div class="container" style="padding-top:100px;">
+    <h2>Yeni Ürün Girişi</h2>
+    <hr />
+
+    @using (Html.BeginForm("Create", "Product", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal justify-content-md-center">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            
+                <div class="form-group row">
+                    <label class="col-md-2 control-label">Ürün Resimleri</label>
+                    <div class="col-md-10">
+                        <input type="file" id="files" name="files" multiple />
+                    </div>
+                </div>
+            
+            @*<div class="form-group row">
+                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.IsApproved, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsApproved)
+                        @Html.ValidationMessageFor(model => model.IsApproved, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.IsHome, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsHome)
+                        @Html.ValidationMessageFor(model => model.IsHome, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.CategoryId, "Kategori Adı", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("CategoryId", null, "Kategori Seçiniz", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $("#files").fileinput({
+        language: "tr",         //desteklenen dil
+        uploadAsync: true,      //asenkron özellik
+        dropZoneTitle: "Resimlerinizi buraya bırakabilirsiniz.",     //başlık
+        browseLabel: "Resim Seçiniz",        //browse buton ismi
+        uploadLabel: "Karşıya Yükle",        //upload buton ismi
+        uploadUrl:"@Url.Action("UploadImage","Product")",
+        allowedFileExtensions: ['jpg', 'png', 'gif'],      //bu dosya uzantılı belgeler yükleyebiliriz.
+        maxFileCount: 10,        //max 10 resim upload edebiliriz.
+        maxImageWidth: 800,
+        maxImageHeight: 600,
+        resizePreference: 'width',      //800x600 den büyük resimler width özelliğine göre ölçeklenir.
+        resizeImageQuality: 0.75,        //resmin kalitesi ile oynayabiliriz.%25 kaliteyi düşürdük.
+        resizeImage: true       //800x600 den büyük resimleri yeniden boyutlandırır.
+    });
+    /*
+    //işlem bittikten sonra çalışacak olan kod 
+    $("#files").on('filebatchuploadcomplete', function () {
+        $("#alert").css({display:"block"})
+       
+    })
+    */
+</script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
